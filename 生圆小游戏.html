@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{width: 500px;height: 500px;background: #fff;margin: 0 auto;position: relative;}
+        #circle{background: #000;width: 500px;height: 500px;border-radius: 50%;}
+        div{position: absolute;width: 50%;height: 50%;}
+    </style>
+</head>
+<body>
+<div id="circle">
+
+</div>
+
+<script>
+    var circle=document.getElementById("circle");
+    circle.onmouseenter=fun;
+    function fun(){
+        var frag=document.createDocumentFragment( );//创建文档碎片，用于盛放div
+        for(var i=0;i<4;i++){
+            var smallCircle=document.createElement("div");//在文档碎片frag下创建div
+            smallCircle.onmouseenter=fun;
+            smallCircle.style.background=color();
+            if(i==0){
+                smallCircle.style.left="0px";
+                smallCircle.style.top="0px";
+            }
+            else if(i==1){
+                smallCircle.style.right="0px";
+                smallCircle.style.top="0px";
+            }
+            else if(i==2){
+                smallCircle.style.left="0px";
+                smallCircle.style.bottom="0px";
+            }
+            else if(i==3){
+                smallCircle.style.right="0px";
+                smallCircle.style.bottom="0px";
+            }
+            smallCircle.style.borderRadius="50%";
+            frag.appendChild(smallCircle);//将smallCircle存放进frag
+        }
+        this.appendChild(frag);//将碎片frag存放到触发的节点下
+        this.style.background="none";//清除节点的背景
+        this.onmouseenter=null;//清除节点的事件//否则再次点击会触发事件
+    }
+//    function color(){//方法一
+//        var colorVal="0123456789abcdef";
+//        var backcolor="";
+//        for(var i=0;i<6;i++){//循环6次
+//            var colorNum=Math.floor(Math.random()*16);//0-15//产生随机数//根据随机数找到对应的字符位置
+//            backcolor=backcolor+colorVal.charAt(colorNum);//得到颜色的表示“******”
+//        }
+//        return "#"+backcolor;//得到颜色的表示“#******”
+//
+//    }
+
+    function color(){//方法二
+        var backcolor="rgb(";
+        for(var i=0;i<3;i++){//循环3次
+            var colorNum=Math.floor(Math.random()*256);//0-255
+            if(i!=2){
+                backcolor=backcolor+colorNum+",";//得到颜色的表示
+            }
+            else{
+                backcolor=backcolor+colorNum;
+            }
+
+        }
+        return backcolor+")";//得到颜色的表示“rgb( , , )”
+
+    }
+//    function color(){//百度方法
+//
+//        return  '#' +
+//                (function(color){
+//                    return (color +=  '0123456789abcdef'[Math.floor(Math.random()*16)])
+//                            && (color.length == 6) ?  color : arguments.callee(color);
+//                })('');
+//    }
+
+
+
+</script>
+</body>
+</html>
